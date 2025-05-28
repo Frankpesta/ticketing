@@ -1,0 +1,191 @@
+[
+	{
+		"name": "Taylor Swift | The Eras Tour",
+		"description": "Experience Taylor Swift's record-breaking Eras Tour live!",
+		"price": 499.99,
+		"totalTickets": 100,
+		"location": "Metlife Stadium, New Jersey",
+		"eventDate": "1723845600000",
+		"userId": "user_2bFMHkGxZPWVVyJ5QEJQxfsCKxB"
+	},
+	{
+		"name": "Coldplay | Music of the Spheres Tour",
+		"description": "Join Coldplay on their world tour filled with light and sound.",
+		"price": 399.99,
+		"totalTickets": 150,
+		"location": "Wembley Stadium, London",
+		"eventDate": "1726545600000",
+		"userId": "user_3dJKLmnTzYWRRzF8LYZKmqwVJbL"
+	},
+	{
+		"name": "Burna Boy | Love, Damini Concert",
+		"description": "Feel the vibe with Burna Boy's Afro-fusion beats.",
+		"price": 299.99,
+		"totalTickets": 120,
+		"location": "O2 Arena, London",
+		"eventDate": "1728268800000",
+		"userId": "user_7cXNpqHwTQMzFyUzHgKyxjcKQsA"
+	},
+	{
+		"name": "Beyoncé | Renaissance Tour",
+		"description": "The Queen returns with her iconic performance.",
+		"price": 599.99,
+		"totalTickets": 200,
+		"location": "SoFi Stadium, Los Angeles",
+		"eventDate": "1729123200000",
+		"userId": "user_1lZRMnQsYDUVZx9OpEqNzXmvzBN"
+	},
+	{
+		"name": "Ed Sheeran | +–=÷× Tour",
+		"description": "A live experience of Ed Sheeran’s chart-topping hits.",
+		"price": 349.99,
+		"totalTickets": 140,
+		"location": "Allegiant Stadium, Las Vegas",
+		"eventDate": "1730649600000",
+		"userId": "user_4pWVBmZnTLsQvQzFWnMzpKvjwEj"
+	},
+	{
+		"name": "Wizkid | Made in Lagos",
+		"description": "Wizkid brings Lagos to the world stage.",
+		"price": 275.5,
+		"totalTickets": 100,
+		"location": "Madison Square Garden, NYC",
+		"eventDate": "1732435200000",
+		"userId": "user_9hCBzGyLJTRqSpzMkOpWQjkFQHt"
+	},
+	{
+		"name": "Drake | It's All a Blur Tour",
+		"description": "See Drake live performing his iconic discography.",
+		"price": 499.0,
+		"totalTickets": 180,
+		"location": "Scotiabank Arena, Toronto",
+		"eventDate": "1733136000000",
+		"userId": "user_5vYHMnHxQWZzVjEoLRJLvMpQrGt"
+	},
+	{
+		"name": "Adele | Weekends with Adele",
+		"description": "An intimate night of soul with Adele.",
+		"price": 650.0,
+		"totalTickets": 75,
+		"location": "Caesars Palace, Las Vegas",
+		"eventDate": "1733827200000",
+		"userId": "user_8kXNMqTySZMpTxNzYKQyOjLUvAx"
+	},
+	{
+		"name": "The Weeknd | After Hours Til Dawn Tour",
+		"description": "Experience the dark pop magic of The Weeknd.",
+		"price": 410.0,
+		"totalTickets": 160,
+		"location": "AT&T Stadium, Texas",
+		"eventDate": "1734432000000",
+		"userId": "user_2bFMHkGxZPWVVyJ5QEJQxfsCKxB"
+	},
+	{
+		"name": "Ariana Grande | Positions Live",
+		"description": "A night of elegance and vocal brilliance with Ariana.",
+		"price": 375.99,
+		"totalTickets": 110,
+		"location": "United Center, Chicago",
+		"eventDate": "1735305600000",
+		"userId": "user_3gVHBqTwXQNyVvQoKRvNjZwCyKt"
+	},
+	{
+		"name": "Imagine Dragons | Mercury Tour",
+		"description": "Rock out with Imagine Dragons’ high-energy show.",
+		"price": 330.0,
+		"totalTickets": 130,
+		"location": "SAP Center, San Jose",
+		"eventDate": "1735996800000",
+		"userId": "user_4rHJMpZwTYUpTjVnEQzNypKvDxM"
+	},
+	{
+		"name": "SZA | SOS Tour",
+		"description": "SZA takes you on an emotional and sonic journey.",
+		"price": 290.0,
+		"totalTickets": 90,
+		"location": "TD Garden, Boston",
+		"eventDate": "1736601600000",
+		"userId": "user_5qYNMtZpTXUpSzQoEQnLxMwDkFx"
+	},
+	{
+		"name": "Rihanna | Savage X Tour",
+		"description": "Rihanna returns with flair and fashion.",
+		"price": 720.0,
+		"totalTickets": 190,
+		"location": "Barclays Center, Brooklyn",
+		"eventDate": "1737292800000",
+		"userId": "user_6kXPNsTyTYPqRxWqFQqKwjLpGrB"
+	},
+	{
+		"name": "Doja Cat | Planet Her Tour",
+		"description": "A cosmic night of hits and visuals with Doja Cat.",
+		"price": 345.0,
+		"totalTickets": 115,
+		"location": "Kia Forum, Inglewood",
+		"eventDate": "1737993600000",
+		"userId": "user_7fWBMqVzTTRqUzZoEQoNsmLvAtH"
+	},
+	{
+		"name": "Post Malone | Twelve Carat Tour",
+		"description": "A wild ride with Post Malone’s best tracks.",
+		"price": 440.5,
+		"totalTickets": 155,
+		"location": "Climate Pledge Arena, Seattle",
+		"eventDate": "1738684800000",
+		"userId": "user_8hCVNtZwTYRrTyPxJQoRwnKzDtG"
+	},
+	{
+		"name": "Justin Bieber | Justice World Tour",
+		"description": "Justin Bieber electrifies fans with hits from *Justice*.",
+		"price": 515.0,
+		"totalTickets": 180,
+		"location": "Accor Arena, Paris",
+		"eventDate": "1739293200000",
+		"userId": "user_9iXNMuTyTZUoTxQpEQvPxpLwDrH"
+	},
+	{
+		"name": "Bruno Mars | 24K Magic Live",
+		"description": "A night of funk, soul, and glittering performance.",
+		"price": 495.0,
+		"totalTickets": 145,
+		"location": "T-Mobile Arena, Las Vegas",
+		"eventDate": "1739901600000",
+		"userId": "user_1zRHMqZsTQWvTxWmLRwPxpKwEtJ"
+	},
+	{
+		"name": "Olivia Rodrigo | Guts World Tour",
+		"description": "Feel the raw emotion with Olivia Rodrigo live.",
+		"price": 350.0,
+		"totalTickets": 125,
+		"location": "Barclays Center, Brooklyn",
+		"eventDate": "1740510000000",
+		"userId": "user_2bFMHkGxZPWVVyJ5QEJQxfsCKxB"
+	},
+	{
+		"name": "Harry Styles | Love On Tour",
+		"description": "A vibrant, colorful night with Harry Styles.",
+		"price": 470.0,
+		"totalTickets": 170,
+		"location": "Madison Square Garden, NYC",
+		"eventDate": "1741118400000",
+		"userId": "user_5kXNMtTySZMpTxNzYKQyOjLUvAx"
+	},
+	{
+		"name": "BLACKPINK | BORN PINK Tour",
+		"description": "Global K-pop sensation BLACKPINK hits the stage.",
+		"price": 550.0,
+		"totalTickets": 200,
+		"location": "National Stadium, Singapore",
+		"eventDate": "1741726800000",
+		"userId": "user_6lYRMqWzTQWzQpXmLRwPxpKwEtJ"
+	},
+	{
+		"name": "Billie Eilish | Happier Than Ever Tour",
+		"description": "A haunting and heartfelt performance by Billie Eilish.",
+		"price": 485.0,
+		"totalTickets": 160,
+		"location": "Mercedes-Benz Arena, Berlin",
+		"eventDate": "1742335200000",
+		"userId": "user_7pYNMuZqTYOpTxQpEQvLxpLwDqH"
+	}
+]
