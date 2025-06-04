@@ -1,9 +1,10 @@
+import EventList from "@/components/event-list";
 import Image from "next/image";
 
 export default function Home() {
 	return (
 		<div>
-			<h1>Welcome to TicketPlus</h1>
+			<EventList />
 		</div>
 	);
 }
