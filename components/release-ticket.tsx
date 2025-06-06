@@ -6,6 +6,7 @@ import { useMutation } from "convex/react";
 import { useState } from "react";
 import { X, XCircle } from "lucide-react";
 import { Button } from "./ui/button";
+import { toast } from "sonner";
 
 const ReleaseTicket = ({
 	eventId,
@@ -18,18 +19,21 @@ const ReleaseTicket = ({
 	const releaseTicket = useMutation(api.waitingList.releaseTicket);
 
 	const handleRelease = async () => {
-		if (!confirm("Are you sure you want to release this ticket offer?")) {
-			return;
-		}
-
-		try {
-			setIsReleasing(true);
-			await releaseTicket({ eventId, waitingListId });
-		} catch (error) {
-			console.error("Error releasing ticket offer:", error);
-		} finally {
-			setIsReleasing(false);
-		}
+		toast.warning("Are you sure you want to release this ticket offer?", {
+			action: {
+				label: "Release",
+				onClick: async () => {
+					try {
+						setIsReleasing(true);
+						await releaseTicket({ eventId, waitingListId });
+					} catch (error) {
+						console.error("Error releasing ticket offer:", error);
+					} finally {
+						setIsReleasing(false);
+					}
+				},
+			},
+		});
 	};
 
 	return (

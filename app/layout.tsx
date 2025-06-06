@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Noto_Sans } from "next/font/google";
+import { Roboto, Noto_Sans, Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import ConvexClientProvider from "@/components/ConvexClientProvider";
@@ -7,14 +7,10 @@ import Header from "@/components/header";
 import SyncUserWithConvex from "@/components/SyncUserWithConvex";
 import { Toaster } from "@/components/ui/sonner";
 
-const geistSans = Inter({
-	variable: "--font-geist-sans",
+const poppins = Inter({
+	variable: "--font-poppins",
 	subsets: ["latin"],
-});
-
-const geistMono = Noto_Sans({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
+	weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], // You can add more weights as needed
 });
 
 export const metadata: Metadata = {
@@ -29,14 +25,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+			<body className={`${poppins.variable} antialiased`}>
 				<ClerkProvider>
 					<ConvexClientProvider>
 						<Header />
 						<SyncUserWithConvex />
 						{children}
-						<Toaster />
+						<Toaster position="top-center" />
 					</ConvexClientProvider>
 				</ClerkProvider>
 			</body>

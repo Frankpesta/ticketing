@@ -26,26 +26,30 @@ const PurchaseTicket = ({ eventId }: { eventId: Id<"events"> }) => {
 
 	useEffect(() => {
 		const calculateTimeRemaining = () => {
-			if (isExpired) {
+			// Check if offer is expired or offerExpiresAt is invalid
+			if (isExpired || !offerExpiresAt || offerExpiresAt <= Date.now()) {
 				setTimeRemaining("Expired");
 				return;
 			}
 
 			const diff = offerExpiresAt - Date.now();
-			const seconds = Math.floor(diff / 1000 / 60);
-			const minutes = Math.floor((diff / 100) % 60);
+			const totalSeconds = Math.floor(diff / 1000);
+			const minutes = Math.floor(totalSeconds / 60);
+			const seconds = totalSeconds % 60;
 
 			if (minutes > 0) {
 				setTimeRemaining(
-					`${minutes} minute${minutes > 1 ? "s" : ""} ${seconds} second${seconds > 1 ? "s" : ""}`
+					`${minutes} minute${minutes !== 1 ? "s" : ""} ${seconds} second${seconds !== 1 ? "s" : ""}`
 				);
 			} else {
-				setTimeRemaining(`${seconds} second${seconds > 1 ? "s" : ""}`);
+				setTimeRemaining(`${seconds} second${seconds !== 1 ? "s" : ""}`);
 			}
 		};
-		calculateTimeRemaining();
+
+		calculateTimeRemaining(); // Run immediately
 		const interval = setInterval(calculateTimeRemaining, 1000);
-		return () => clearInterval(interval);
+
+		return () => clearInterval(interval); // Cleanup interval on unmount
 	}, [offerExpiresAt, isExpired]);
 
 	// Stripe checkout
@@ -83,7 +87,7 @@ const PurchaseTicket = ({ eventId }: { eventId: Id<"events"> }) => {
 				<Button
 					onClick={handlePurchase}
 					disabled={isExpired || isLoading}
-					className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-4 rounded-lg font-bold shadow hover:from-amber-600 hover:to-amber-700 transform hover:scale-[1.02] transition-all duration-200 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed disabled:hover:scale-100 text-lg">
+					className="mt-4 w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-4 rounded-lg font-bold shadow hover:from-amber-600 hover:to-amber-700 transform hover:scale-[1.02] transition-all duration-200 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed disabled:hover:scale-100 text-lg">
 					{isLoading
 						? "Redirecting to checkout..."
 						: "Purchase Your Ticket Now →"}
