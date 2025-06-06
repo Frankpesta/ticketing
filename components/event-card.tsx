@@ -174,7 +174,7 @@ const EventCard = ({ eventId }: { eventId: Id<"events"> }) => {
 						<div className="flex flex-col items-start gap-2">
 							{isEventOwner && (
 								<span className="inline-flex items-center gap-1 bg-blue-600/50 text-white px-2 py-1 rounded-full text-xs font-medium">
-									<StarIcon w-3 h-3 />
+									<StarIcon className="w-3 h-3" />
 									Your Event
 								</span>
 							)}
