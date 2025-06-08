@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 import Link from "next/link";
-import { CalendarDays, Plus } from "lucide-react";
+import { CalendarDays, CheckCheckIcon, Plus } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
 import { useTransition } from "react";
@@ -131,25 +131,21 @@ const SellerDashboard = () => {
 		setSuccess(null);
 		try {
 			const result = await createPaystackConnectCustomer(values);
-			console.log(result);
-			startTransition(() => {
-				if (result?.account) {
-					setSuccess("Account successfully created! You can now proceed.");
-					toast.success("Account created successfully.");
-					form.reset();
-				}
-			});
+
+			if (result?.account) {
+				setSuccess("Account successfully created! You can now proceed.");
+				setAccountCreatePending(false);
+				toast.success("Account created successfully.");
+				form.reset();
+			}
 		} catch (err: any) {
-			startTransition(() => {
-				setError(err.message || "An error occurred during onboarding.");
-			});
-		} finally {
-			console.log("Execution finished");
+			setError(err.message || "An error occurred during onboarding.");
+			setAccountCreatePending(false);
 		}
 	}
 
 	return (
-		<div className="max-w-3xl mx-auto p-6">
+		<div className="max-w-full lg:max-w-3xl mx-auto p-6">
 			<div className="bg-white rounded-lg shadow-lg overflow-hidden">
 				{/* header section */}
 				<div className="bg-gradient-to-r from-blue-600 to-blue-800 px-4 py-6 text-white">
@@ -379,6 +375,75 @@ const SellerDashboard = () => {
 								</div>
 							</DialogContent>
 						</Dialog>
+					</div>
+				)}
+				{/* Account Status Section */}
+				{payStackConnectId && accountStatus && (
+					<div className="space-y-6">
+						{/* Status Card */}
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							{/* Account Status Card */}
+							<div className="bg-gra-50 rounded-lg p-4">
+								<h3 className="text-sm font-medium text-gray-500">
+									Account Status
+								</h3>
+								<div className="mt-2 flex items-center">
+									<div
+										className={`w-3 h-3 rounded-full mr-2 ${accountStatus.is_verified ? "bg-green-500" : "bg-yellow-500"}`}
+									/>
+
+									<span className="text-lg font-semibold">
+										{accountStatus.is_verified
+											? "Verified"
+											: "Pending Verification"}
+									</span>
+								</div>
+							</div>
+							{/* Payment Status Card */}
+							<div className="bg-gray-50 rounded-lg p-4">
+								<h3 className="text-sm font-medium text-gray-500">
+									Payment Capability
+								</h3>
+								<div className="mt-2 space-y-1">
+									<div className="flex items-center">
+										<CheckCheckIcon
+											className={`w-5 h-5 ${accountStatus.active ? "text-green-500" : "text-gray-400"}`}
+										/>
+										<span className="ml-2">
+											{accountStatus.active
+												? "Can accept payments"
+												: "Cannot accept payments yet"}
+										</span>
+									</div>
+								</div>
+
+								<div className="mt-2 space-y-1">
+									<div className="flex items-center">
+										<CheckCheckIcon
+											className={`w-5 h-5 ${accountStatus.settlement_bank ? "text-green-500" : "text-gray-400"}`}
+										/>
+										<span className="ml-2">
+											{accountStatus.settlement_bank
+												? `Bank: ${accountStatus.settlement_bank}`
+												: "No settlement Bank yet. "}
+										</span>
+									</div>
+								</div>
+
+								<div className="mt-2 space-y-1">
+									<div className="flex items-center">
+										<CheckCheckIcon
+											className={`w-5 h-5 ${accountStatus.account_number ? "text-green-500" : "text-gray-400"}`}
+										/>
+										<span className="ml-2">
+											{accountStatus.account_number
+												? `Account Number: ${accountStatus.account_number}`
+												: "No account number present. "}
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				)}
 			</div>
