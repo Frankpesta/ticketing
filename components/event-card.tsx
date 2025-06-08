@@ -178,9 +178,7 @@ const EventCard = ({ eventId }: { eventId: Id<"events"> }) => {
 									Your Event
 								</span>
 							)}
-							<h2 className="text-2xl font-bold text-gray-900">
-								{event?.name}
-							</h2>
+							<h2 className="text-xl font-bold text-gray-900">{event?.name}</h2>
 						</div>
 						{isPastEvent && (
 							<span
@@ -190,20 +188,20 @@ const EventCard = ({ eventId }: { eventId: Id<"events"> }) => {
 							</span>
 						)}
 					</div>
-				</div>
-				{/* Price Tag */}
-				<div className="flex flex-col items-end gap-2 ml-4">
-					<span
-						className={`px-4 py-1.5 font-semibold rounded-full ${isPastEvent ? "bg-gray-50 text-gray-500" : "bg-green-50 text-green-700"}`}>
-						₦{event?.price.toFixed(2)}
-					</span>
-					{availability?.purchasedCount !== undefined &&
-						availability?.totalTickets !== undefined &&
-						availability.purchasedCount >= availability.totalTickets && (
-							<span className="px-4 py-3.5 bg-red text-red-700 font-semibold rounded-full text-sm">
-								Sold Out
-							</span>
-						)}
+					{/* Price Tag */}
+					<div className="flex flex-col items-end gap-2 ml-4">
+						<span
+							className={`px-4 py-1.5 font-semibold rounded-full ${isPastEvent ? "bg-gray-50 text-gray-500" : "bg-green-50 text-green-700"}`}>
+							₦{event?.price.toFixed(2)}
+						</span>
+						{availability?.purchasedCount !== undefined &&
+							availability?.totalTickets !== undefined &&
+							availability.purchasedCount >= availability.totalTickets && (
+								<span className="px-4 py-3.5 bg-red text-red-700 font-semibold rounded-full text-sm">
+									Sold Out
+								</span>
+							)}
+					</div>
 				</div>
 
 				{/* Event Details */}
