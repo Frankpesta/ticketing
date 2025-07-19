@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import ReleaseTicket from "./release-ticket";
+import { createPaystackCheckoutSession } from "@/actions/createPaystackCheckout";
 
 const PurchaseTicket = ({ eventId }: { eventId: Id<"events"> }) => {
 	const router = useRouter();
@@ -53,7 +54,22 @@ const PurchaseTicket = ({ eventId }: { eventId: Id<"events"> }) => {
 	}, [offerExpiresAt, isExpired]);
 
 	// Stripe checkout
-	const handlePurchase = async () => {};
+	const handlePurchase = async () => {
+		if (!user) return;
+
+		try {
+			setIsLoading(true);
+			const { secureUrl } = await createPaystackCheckoutSession({
+				eventId,
+			});
+			if (secureUrl) {
+				router.push(secureUrl);
+			}
+		} catch (error) {
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	if (!user || !queuePosition || queuePosition.status !== "offered") {
 		return null;

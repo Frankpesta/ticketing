@@ -7,7 +7,7 @@ import Header from "@/components/header";
 import SyncUserWithConvex from "@/components/SyncUserWithConvex";
 import { Toaster } from "@/components/ui/sonner";
 
-const poppins = Inter({
+const poppins = Noto_Sans({
 	variable: "--font-poppins",
 	subsets: ["latin"],
 	weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], // You can add more weights as needed

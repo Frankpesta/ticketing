@@ -16,14 +16,20 @@ import { useParams } from "next/navigation";
 const EventPage = () => {
 	const params = useParams();
 	const { user } = useUser();
-	const event = useQuery(api.events.getEventById, {
-		eventId: params.id as Id<"events">,
-	});
-	const availability = useQuery(api.events.getEventAvailability, {
-		eventId: params.id as Id<"events">,
-	});
+
+	// Only call query if params.id exists
+	const event = params.id
+		? useQuery(api.events.getEventById, { eventId: params.id as Id<"events"> })
+		: null;
+	const availability = params.id
+		? useQuery(api.events.getEventAvailability, {
+				eventId: params.id as Id<"events">,
+			})
+		: null;
+
 	const imageUrl = useStorageUrl(event?.imageStorageId);
 
+	// Show loading spinner while event or availability is not loaded
 	if (!event || !availability) {
 		return (
 			<div className="min-h-screen flex items-center justify-center">
