@@ -192,6 +192,14 @@ export const processQueue = mutation({
 	},
 });
 
+// Define the processQueue mutation
+export const processQueue2 = internalMutation({
+	args: { eventId: v.id("events") },
+	handler: async (ctx, { eventId }) => {
+		await processQueueLogic(ctx, eventId);
+	},
+});
+
 export const releaseTicket = mutation({
 	args: {
 		eventId: v.id("events"),

@@ -2,6 +2,7 @@ import { v, ConvexError, convexToJson } from "convex/values";
 import { internalQuery, mutation, query } from "./_generated/server";
 import { DURATIONS, TICKET_STATUS, WAITING_LIST_STATUS } from "./constants";
 import { internal } from "./_generated/api";
+import { processQueue } from "./waitingList";
 
 export const create = mutation({
 	args: {
@@ -261,5 +262,90 @@ export const joinWaitingList = mutation({
 				? "Ticket offered! Please complete your purchase within the next 15 minutes."
 				: "You have been added to the waiting list. We will notify you if a ticket becomes available.",
 		};
+	},
+});
+
+export const purchaseTicket = mutation({
+	args: {
+		eventId: v.id("events"),
+		userId: v.string(),
+		waitingListId: v.id("waitingList"),
+		paymentInfo: v.object({
+			amount: v.number(),
+			paymentIntentId: v.string(),
+		}),
+	},
+	handler: async (ctx, { eventId, userId, waitingListId, paymentInfo }) => {
+		// Verify waitinglist entry exists and is valid
+		const waitingListEntry = await ctx.db.get(waitingListId);
+		console.log("Waitiing list entry", waitingListEntry);
+
+		if (!waitingListEntry) {
+			console.error("Waiting list entry not found");
+			throw new Error("Waiting list entry was not found");
+		}
+
+		// Verify event exists and is active
+		const event = await ctx.db.get(eventId);
+		console.log("Event details", event);
+
+		if (!event) {
+			console.log("Event not found", { eventId });
+			throw new Error("Event not found");
+		}
+
+		if (event.is_cancelled) {
+			console.error("Attempted to purchase ticket for a cancelled event", {
+				eventId,
+			});
+			throw new Error("Event is no longer active");
+		}
+
+		try {
+			console.log("Creating a ticket with payment info", paymentInfo);
+			// create ticket with payment info
+			await ctx.db.insert("tickets", {
+				eventId,
+				userId,
+				purchasedAt: Date.now(),
+				status: TICKET_STATUS.VALID,
+				paymentIntentId: paymentInfo.paymentIntentId,
+				amount: paymentInfo.amount,
+			});
+			console.log("Updating waiting list status to purchased");
+			await ctx.db.patch(waitingListId, {
+				status: WAITING_LIST_STATUS.PURCHASED,
+			});
+			console.log("Processing queue for next person");
+			// Process Queue for next person
+			await ctx.runMutation(internal.waitingList.processQueue2, { eventId });
+			console.log("Purchase completed successfully");
+		} catch (error) {
+			console.error("Error during ticket purchase", error);
+			throw new Error(
+				`Failed to purchase ticket. Please try again later: ${error}`
+			);
+		}
+	},
+});
+
+export const getUserTickets = query({
+	args: { userId: v.string() },
+	handler: async (ctx, { userId }) => {
+		const tickets = await ctx.db
+			.query("tickets")
+			.withIndex("by_user", (q) => q.eq("userId", userId))
+			.collect();
+
+		const ticketsWithEvents = await Promise.all(
+			tickets.map(async (ticket) => {
+				const event = await ctx.db.get(ticket.eventId);
+				return {
+					...ticket,
+					event,
+				};
+			})
+		);
+		return ticketsWithEvents;
 	},
 });
