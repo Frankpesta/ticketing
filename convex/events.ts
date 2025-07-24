@@ -4,6 +4,13 @@ import { DURATIONS, TICKET_STATUS, WAITING_LIST_STATUS } from "./constants";
 import { internal } from "./_generated/api";
 import { processQueue } from "./waitingList";
 
+export type Metrics = {
+	soldTickets: number;
+	refundedTickets: number;
+	cancelledTickets: number;
+	revenue: number;
+};
+
 export const create = mutation({
 	args: {
 		name: v.string(),
@@ -347,5 +354,65 @@ export const getUserTickets = query({
 			})
 		);
 		return ticketsWithEvents;
+	},
+});
+
+export const search = query({
+	args: { searchTerm: v.string() },
+	handler: async (ctx, { searchTerm }) => {
+		const events = await ctx.db
+			.query("events")
+			.filter((q) => q.eq(q.field("is_cancelled"), undefined))
+			.collect();
+
+		return events.filter((event) => {
+			const searchTermLower = searchTerm.toLowerCase();
+			return (
+				event.name.toLowerCase().includes(searchTermLower) ||
+				event.description.toLowerCase().includes(searchTermLower) ||
+				event.location.toLowerCase().includes(searchTermLower)
+			);
+		});
+	},
+});
+
+export const getSellerEvents = query({
+	args: { userId: v.string() },
+	handler: async (ctx, { userId }) => {
+		const events = await ctx.db
+			.query("events")
+			.filter((q) => q.eq(q.field("userId"), userId))
+			.collect();
+
+		const eventWithMetrics = await Promise.all(
+			events.map(async (event) => {
+				const tickets = await ctx.db
+					.query("tickets")
+					.withIndex("by_event", (q) => q.eq("eventId", event._id))
+					.collect();
+
+				const validTickets = tickets.filter(
+					(t) => t.status === "valid" || t.status === "used"
+				);
+				const refundedTickets = tickets.filter((t) => t.status === "refunded");
+				const cancelledTickets = tickets.filter(
+					(t) => t.status === "cancelled"
+				);
+
+				const metrics: Metrics = {
+					soldTickets: validTickets.length,
+					refundedTickets: refundedTickets.length,
+					cancelledTickets: cancelledTickets.length,
+					revenue: validTickets.length * event.price,
+				};
+
+				return {
+					...event,
+					metrics,
+				};
+			})
+		);
+
+		return eventWithMetrics;
 	},
 });
