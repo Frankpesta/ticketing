@@ -1,9 +1,17 @@
 import { Doc } from "@/convex/_generated/dataModel";
 import { Metrics } from "@/convex/events";
 import { useStorageUrl } from "@/lib";
-import { Ban, Edit, Ticket } from "lucide-react";
+import {
+	Ban,
+	Banknote,
+	CalendarDays,
+	Edit,
+	InfoIcon,
+	Ticket,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import CancelEventButton from "./CancelEventButton";
 
 function SellerEventCard({
 	event,
@@ -70,6 +78,62 @@ function SellerEventCard({
 										{event.is_cancelled ? "Tickets Refunded" : "Tickets Sold"}
 									</span>
 								</div>
+								<p>
+									{event.is_cancelled ? (
+										<>
+											{event.metrics.refundedTickets}
+											<span className="text-sm text-gray-500 font-normal">
+												refunded
+											</span>
+										</>
+									) : (
+										<>
+											{event.metrics.soldTickets}
+											<span className="text-sm text-gray-500 font-normal">
+												/{event.totalTickets}
+											</span>
+										</>
+									)}
+								</p>
+							</div>
+
+							<div className="bg-gray-50 p-3 rounded-lg">
+								<div className="flex items-center gap-2 text-gray-600 mb-1">
+									<Banknote className="w-4 h-4" />
+									<span className="text-sm font-medium">
+										{event.is_cancelled ? "Amount Refunded" : "Revenue"}
+									</span>
+								</div>
+								<p className="text-2xl font-semibold text-gray-900">
+									₦
+									{event.is_cancelled
+										? event.metrics.refundedTickets * event.price
+										: event.metrics.revenue}
+								</p>
+							</div>
+
+							<div className="bg-gray-50 p-3 rounded-lg">
+								<div className="flex items-center gap-2 text-gray-600 mb-1">
+									<CalendarDays className="w-4 h-4" />
+									<span className="text-sm font-medium">Date</span>
+								</div>
+								<p className="text-sm font-medium text-gray-900">
+									{new Date(event.eventDate).toLocaleDateString()}
+								</p>
+							</div>
+
+							<div className="bg-gray-50 p-3 rounded-lg">
+								<div className="flex items-center gap-2 text-gray-600 mb-1">
+									<InfoIcon className="w-4 h-4" />
+									<span className="text-sm font-medium">Status</span>
+								</div>
+								<p className="text-sm font-medium text-gray-900">
+									{event.is_cancelled
+										? "Cancelled"
+										: isPastEvent
+											? "Ended"
+											: "Active"}
+								</p>
 							</div>
 						</div>
 					</div>

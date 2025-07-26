@@ -3,6 +3,7 @@ import { internalQuery, mutation, query } from "./_generated/server";
 import { DURATIONS, TICKET_STATUS, WAITING_LIST_STATUS } from "./constants";
 import { internal } from "./_generated/api";
 import { processQueue } from "./waitingList";
+import { CarTaxiFront } from "lucide-react";
 
 export type Metrics = {
 	soldTickets: number;
@@ -414,5 +415,45 @@ export const getSellerEvents = query({
 		);
 
 		return eventWithMetrics;
+	},
+});
+
+export const cancelEvent = mutation({
+	args: { eventId: v.id("events") },
+	handler: async (ctx, { eventId }) => {
+		const event = await ctx.db.get(eventId);
+		if (!event) throw new Error("Event not found");
+
+		// Get all valid tickets for this event
+		const tickets = await ctx.db
+			.query("tickets")
+			.withIndex("by_event", (q) => q.eq("eventId", eventId))
+			.filter((q) =>
+				q.or(q.eq(q.field("status"), "valid"), q.eq(q.field("status"), "used"))
+			)
+			.collect();
+
+		if (tickets.length > 0) {
+			throw new Error(
+				"Cannot cancel event with active tickets. Please refund all tickets first."
+			);
+		}
+
+		// Mark event as cancelled
+		await ctx.db.patch(eventId, {
+			is_cancelled: true,
+		});
+
+		// Delete any waitinglist entries
+		const waitingListEntries = await ctx.db
+			.query("waitingList")
+			.withIndex("by_event_status", (q) => q.eq("eventId", eventId))
+			.collect();
+
+		for (const entry of waitingListEntries) {
+			await ctx.db.delete(entry._id);
+		}
+
+		return { success: true };
 	},
 });

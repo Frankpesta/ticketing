@@ -1,18 +1,4 @@
 "use client";
-
-import {
-	CalendarDays,
-	Edit,
-	Ticket,
-	Ban,
-	InfoIcon,
-	Banknote,
-} from "lucide-react";
-import Link from "next/link";
-import { useStorageUrl } from "@/lib";
-import Image from "next/image";
-import { Doc } from "@/convex/_generated/dataModel";
-import { Metrics } from "@/convex/events";
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -54,7 +40,7 @@ export default function SellerEventList() {
 						<SellerEventCard key={event._id} event={event} />
 					))}
 					{pastEvents.length === 0 && (
-						<p className="text-gray-500">No upcoming events.</p>
+						<p className="text-gray-500">No past events.</p>
 					)}
 				</div>
 			</div>
