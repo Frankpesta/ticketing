@@ -1,5 +1,6 @@
 "use client";
 
+import React, { Suspense, ReactElement } from "react";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { useSearchParams } from "next/navigation";
@@ -7,7 +8,7 @@ import EventCard from "@/components/event-card";
 import { Search as SearchIcon } from "lucide-react";
 import Spinner from "@/components/Spinner";
 
-function Search() {
+function Search(): ReactElement {
 	const searchParams = useSearchParams();
 	const query = searchParams.get("q") || "";
 	const searchResults = useQuery(api.events.search, { searchTerm: query });
@@ -41,7 +42,6 @@ function Search() {
 					</div>
 				</div>
 
-				{/* No Results State */}
 				{searchResults.length === 0 && (
 					<div className="text-center py-12 bg-white rounded-xl shadow-sm">
 						<SearchIcon className="w-12 h-12 text-gray-300 mx-auto mb-4" />
@@ -53,7 +53,6 @@ function Search() {
 					</div>
 				)}
 
-				{/* Upcoming Events */}
 				{upcomingEvents.length > 0 && (
 					<div>
 						<h2 className="text-xl font-semibold text-gray-900 mb-6">
@@ -67,7 +66,6 @@ function Search() {
 					</div>
 				)}
 
-				{/* Past Events */}
 				{pastEvents.length > 0 && (
 					<div className="mt-6">
 						<h2 className="text-xl font-semibold text-gray-900 mb-6">
@@ -85,4 +83,15 @@ function Search() {
 	);
 }
 
-export default Search;
+export default function SearchPage(): ReactElement {
+	return (
+		<Suspense
+			fallback={
+				<div className="flex items-center justify-center h-screen">
+					<Spinner />
+				</div>
+			}>
+			<Search />
+		</Suspense>
+	);
+}
