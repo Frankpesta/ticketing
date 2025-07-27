@@ -76,9 +76,9 @@ const PurchaseTicket = ({ eventId }: { eventId: Id<"events"> }) => {
 	}
 
 	return (
-		<div className="bg-white py-6 rounded-xl shadow-lg border-amber-200">
+		<div className="px-1 py-6 rounded-xl border-amber-200">
 			<div className="spacey-y-4">
-				<div className="bg-white rounded-lg py-6 px-2 border border-gray-200">
+				<div className="bg-white rounded-lg py-6 px-2">
 					<div className="flex flex-col gap-4">
 						<div className="flex items-center gap-3">
 							<div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center">
