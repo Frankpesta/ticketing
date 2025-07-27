@@ -4,7 +4,7 @@ const nextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "earnest-bass-959.convex.cloud",
+				hostname: "terrific-swan-222.convex.cloud",
 				port: "", // Leave empty for default HTTPS port (443)
 				pathname: "/api/storage/**", // Allow all paths under /api/storage/
 			},
