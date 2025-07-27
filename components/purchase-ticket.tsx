@@ -78,7 +78,7 @@ const PurchaseTicket = ({ eventId }: { eventId: Id<"events"> }) => {
 	return (
 		<div className="bg-white p-6 rounded-xl shadow-lg border-amber-200">
 			<div className="spacey-y-4">
-				<div className="bg-white rounded-lg p-6 border border-gray-200">
+				<div className="bg-white rounded-lg py-6 px-2 border border-gray-200">
 					<div className="flex flex-col gap-4">
 						<div className="flex items-center gap-3">
 							<div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center">
@@ -103,7 +103,7 @@ const PurchaseTicket = ({ eventId }: { eventId: Id<"events"> }) => {
 				<Button
 					onClick={handlePurchase}
 					disabled={isExpired || isLoading}
-					className="mt-4 w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-4 rounded-lg font-bold shadow hover:from-amber-600 hover:to-amber-700 transform hover:scale-[1.02] transition-all duration-200 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed disabled:hover:scale-100 text-lg">
+					className="mt-4 w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-4 rounded-lg shadow hover:from-amber-600 hover:to-amber-700 transform hover:scale-[1.02] transition-all duration-200 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed disabled:hover:scale-100">
 					{isLoading
 						? "Redirecting to checkout..."
 						: "Purchase Your Ticket Now →"}
